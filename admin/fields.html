@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelola Lapangan — SportBook Admin</title>
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar" id="adminSidebar"></aside>
+    <main class="admin-main">
+      <div class="page-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <div>
+          <h1 class="page-header-title">🏟️ Kelola Lapangan</h1>
+          <p class="page-header-subtitle">Tambah, edit, dan kelola lapangan olahraga</p>
+        </div>
+        <button class="btn btn-primary" id="addFieldBtn">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Tambah Lapangan
+        </button>
+      </div>
+
+      <!-- Search/Filter -->
+      <div class="filter-bar" style="margin-bottom:1.5rem;">
+        <div class="search-input-wrapper" style="flex:1;min-width:200px;">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input type="text" id="searchField" class="search-input form-control" placeholder="Cari lapangan..." />
+        </div>
+        <div class="filter-chips">
+          <button class="chip active" data-type="all">Semua</button>
+          <button class="chip" data-type="futsal">⚽ Futsal</button>
+          <button class="chip" data-type="basket">🏀 Basket</button>
+          <button class="chip" data-type="badminton">🏸 Badminton</button>
+          <button class="chip" data-type="tenis">🎾 Tenis</button>
+          <button class="chip" data-type="voli">🏐 Voli</button>
+        </div>
+        <select class="form-control" id="statusFilter" style="width:auto;font-size:0.8rem;padding:0.5rem 0.75rem;">
+          <option value="all">Semua Status</option>
+          <option value="active">Aktif</option>
+          <option value="inactive">Nonaktif</option>
+        </select>
+      </div>
+
+      <!-- Fields Table -->
+      <div class="card">
+        <div class="card-body" style="padding:0;">
+          <div id="fieldsTableContainer">
+            <div class="page-loading" style="min-height:300px;"><div class="spinner"></div><span>Memuat data...</span></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Field Form Modal -->
+  <div class="modal-overlay" id="fieldModal" style="display:none;">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h2 class="modal-title" id="fieldModalTitle">➕ Tambah Lapangan</h2>
+        <button class="modal-close" id="closeFieldModal">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="fieldForm">
+          <input type="hidden" id="fieldId" />
+          <div class="grid grid-2" style="gap:1.25rem;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Nama Lapangan <span class="required">*</span></label>
+              <input type="text" id="fieldName" class="form-control" placeholder="Lapangan Futsal A" required />
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Jenis Olahraga <span class="required">*</span></label>
+              <select id="fieldType" class="form-control" required>
+                <option value="">Pilih jenis...</option>
+                <option value="futsal">⚽ Futsal</option>
+                <option value="basket">🏀 Basket</option>
+                <option value="badminton">🏸 Badminton</option>
+                <option value="tenis">🎾 Tenis</option>
+                <option value="voli">🏐 Voli</option>
+                <option value="renang">🏊 Renang</option>
+                <option value="lainnya">🏟️ Lainnya</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:1.25rem;">
+            <label class="form-label">Harga per Jam (Rp) <span class="required">*</span></label>
+            <div class="input-group">
+              <svg class="input-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+              <input type="number" id="fieldPrice" class="form-control" placeholder="100000" min="0" step="1000" required />
+            </div>
+            <div class="form-hint" id="pricePreview"></div>
+          </div>
+          <div class="grid grid-2" style="gap:1.25rem;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Jam Buka <span class="required">*</span></label>
+              <input type="time" id="fieldOpenTime" class="form-control" value="07:00" required />
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Jam Tutup <span class="required">*</span></label>
+              <input type="time" id="fieldCloseTime" class="form-control" value="22:00" required />
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:1.25rem;">
+            <label class="form-label">Deskripsi</label>
+            <textarea id="fieldDescription" class="form-control" rows="3" placeholder="Deskripsikan fasilitas dan keunggulan lapangan ini..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Foto Lapangan</label>
+            <div class="file-upload" id="imageUploadZone">
+              <input type="file" id="fieldImage" accept="image/*" />
+              <div class="file-upload-icon">🏟️</div>
+              <div class="file-upload-text"><strong>Klik atau drag foto</strong> lapangan di sini</div>
+              <div style="font-size:0.75rem;color:var(--clr-text-subtle);margin-top:0.5rem;">JPG, PNG, WEBP maks. 5MB</div>
+            </div>
+            <div id="imagePreviewContainer" style="display:none;margin-top:0.75rem;">
+              <img id="imagePreview" style="width:100%;max-height:200px;object-fit:cover;border-radius:10px;" />
+              <button type="button" class="btn btn-ghost btn-sm" id="removeImageBtn" style="margin-top:0.5rem;">✕ Hapus foto</button>
+            </div>
+            <div id="currentImageContainer" style="display:none;margin-top:0.75rem;">
+              <div style="font-size:0.75rem;color:var(--clr-text-muted);margin-bottom:0.5rem;">Foto saat ini:</div>
+              <img id="currentImage" style="width:100%;max-height:160px;object-fit:cover;border-radius:10px;" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
+                <input type="checkbox" id="fieldIsActive" checked style="width:18px;height:18px;accent-color:var(--clr-primary);" />
+                <span style="font-size:0.875rem;">Lapangan aktif (dapat dipesan)</span>
+              </label>
+            </div>
+          </div>
+          <div id="fieldFormError" class="form-error" style="display:none;padding:0.75rem;background:rgba(239,68,68,0.1);border-radius:8px;border:1px solid rgba(239,68,68,0.2);"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelFieldBtn">Batal</button>
+        <button class="btn btn-primary" id="saveFieldBtn">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+          Simpan Lapangan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div class="modal-overlay" id="deleteModal" style="display:none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">🗑️ Hapus Lapangan</h2>
+        <button class="modal-close" id="closeDeleteModal">×</button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--clr-text-muted);">Apakah kamu yakin ingin menghapus lapangan <strong id="deleteFieldName"></strong>? Semua booking terkait akan ikut terhapus.</p>
+        <div style="margin-top:1rem;padding:0.75rem;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:8px;font-size:0.8rem;color:var(--clr-danger);">
+          ⚠️ Tindakan ini tidak dapat dibatalkan!
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelDeleteBtn">Batal</button>
+        <button class="btn btn-danger" id="confirmDeleteBtn">Hapus Lapangan</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../js/admin/fields.js"></script>
+</body>
+</html>

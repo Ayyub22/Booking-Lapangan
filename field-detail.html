@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detail Lapangan — SportBook</title>
+  <meta name="description" content="Lihat detail dan booking lapangan olahraga pilihanmu." />
+  <link rel="stylesheet" href="./css/main.css" />
+</head>
+<body>
+  <header class="navbar" id="navbar"></header>
+
+  <div class="page-wrapper">
+    <div id="pageContent">
+      <div class="page-loading" style="min-height:80vh;">
+        <div class="spinner"></div>
+        <span>Memuat detail lapangan...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div class="modal-overlay" id="bookingModal" style="display:none;">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h2 class="modal-title">📋 Buat Booking</h2>
+        <button class="modal-close" id="closeBookingModal">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="bookingForm">
+          <div class="grid grid-2" style="gap:1.25rem;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Tanggal Booking <span class="required">*</span></label>
+              <input type="date" id="bookingDate" class="form-control" required />
+              <div class="form-hint">Booking mulai dari hari ini</div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Durasi (Jam)</label>
+              <select id="durationSelect" class="form-control">
+                <option value="1">1 Jam</option>
+                <option value="2">2 Jam</option>
+                <option value="3">3 Jam</option>
+                <option value="4">4 Jam</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:1.25rem;">
+            <label class="form-label">Pilih Jam Mulai <span class="required">*</span></label>
+            <div id="slotsLoading" style="padding:1rem;color:var(--clr-text-muted);font-size:0.875rem;">Pilih tanggal dahulu untuk melihat slot tersedia...</div>
+            <div id="slotGrid" class="slot-grid" style="display:none;"></div>
+            <div class="slot-legend">
+              <div class="slot-legend-item"><div class="slot-dot slot-dot-available"></div> Tersedia</div>
+              <div class="slot-legend-item"><div class="slot-dot slot-dot-selected"></div> Dipilih</div>
+              <div class="slot-legend-item"><div class="slot-dot slot-dot-booked"></div> Sudah Dibooking</div>
+            </div>
+            <input type="hidden" id="selectedStartTime" />
+            <input type="hidden" id="selectedEndTime" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Catatan (Opsional)</label>
+            <textarea id="bookingNotes" class="form-control" rows="2" placeholder="Misal: perlu rompi warna merah untuk 10 orang..."></textarea>
+          </div>
+
+          <!-- Price Summary -->
+          <div style="background:var(--clr-surface-2);border:1px solid var(--clr-border);border-radius:12px;padding:1.25rem;" id="priceSummary">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+              <span style="color:var(--clr-text-muted);font-size:0.875rem;">Harga per Jam</span>
+              <span id="pricePerHour">-</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+              <span style="color:var(--clr-text-muted);font-size:0.875rem;">Durasi</span>
+              <span id="summaryDuration">-</span>
+            </div>
+            <div style="height:1px;background:var(--clr-border);margin:0.75rem 0;"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-weight:700;">Total Pembayaran</span>
+              <span style="font-size:1.25rem;font-weight:800;color:var(--clr-primary);" id="totalPrice">-</span>
+            </div>
+          </div>
+
+          <div id="bookingError" class="form-error" style="display:none;margin-top:0.75rem;padding:0.75rem 1rem;background:rgba(239,68,68,0.1);border-radius:8px;border:1px solid rgba(239,68,68,0.2);"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelBookingBtn">Batal</button>
+        <button class="btn btn-primary" id="submitBookingBtn">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          Konfirmasi Booking
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="modal-overlay" id="reviewModal" style="display:none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">⭐ Tulis Review</h2>
+        <button class="modal-close" id="closeReviewModal">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="reviewForm">
+          <div class="form-group">
+            <label class="form-label">Rating <span class="required">*</span></label>
+            <div class="stars" id="ratingStars" style="font-size:2rem;gap:4px;cursor:pointer;">
+              <span class="star" data-value="1">★</span>
+              <span class="star" data-value="2">★</span>
+              <span class="star" data-value="3">★</span>
+              <span class="star" data-value="4">★</span>
+              <span class="star" data-value="5">★</span>
+            </div>
+            <input type="hidden" id="ratingValue" value="0" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Komentar</label>
+            <textarea id="reviewComment" class="form-control" rows="3" placeholder="Ceritakan pengalamanmu di lapangan ini..."></textarea>
+          </div>
+          <div id="reviewError" class="form-error" style="display:none;padding:0.75rem;background:rgba(239,68,68,0.1);border-radius:8px;border:1px solid rgba(239,68,68,0.2);"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelReviewBtn">Batal</button>
+        <button class="btn btn-primary" id="submitReviewBtn">Kirim Review</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-brand">⚽ SportBook</div>
+      <p style="font-size:0.75rem;">© <span id="year"></span> SportBook. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="./js/field-detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Admin — SportBook</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="adminSidebar"></aside>
+
+    <!-- Main -->
+    <main class="admin-main">
+      <div class="page-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <div>
+          <h1 class="page-header-title">📊 Dashboard</h1>
+          <p class="page-header-subtitle" id="dashGreeting">Selamat datang kembali!</p>
+        </div>
+        <div style="display:flex;gap:0.75rem;align-items:center;">
+          <select id="periodFilter" class="form-control" style="width:auto;font-size:0.875rem;">
+            <option value="7">7 Hari Terakhir</option>
+            <option value="30" selected>30 Hari Terakhir</option>
+            <option value="90">3 Bulan Terakhir</option>
+          </select>
+          <button class="btn btn-outline btn-sm" id="exportBtn">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Export CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="grid grid-4" id="statCards" style="margin-bottom:2rem;">
+        <div class="stat-card green">
+          <div class="stat-icon green">📋</div>
+          <div class="stat-value" id="statTotalBookings">-</div>
+          <div class="stat-label">Total Booking</div>
+          <div class="stat-change positive" id="statBookingChange"><span>↑</span> memuat...</div>
+        </div>
+        <div class="stat-card amber">
+          <div class="stat-icon amber">💰</div>
+          <div class="stat-value" id="statRevenue">-</div>
+          <div class="stat-label">Pendapatan Bulan Ini</div>
+          <div class="stat-change positive" id="statRevenueChange"><span>↑</span> memuat...</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-icon blue">🏟️</div>
+          <div class="stat-value" id="statFields">-</div>
+          <div class="stat-label">Lapangan Aktif</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-icon purple">⏳</div>
+          <div class="stat-value" id="statPending">-</div>
+          <div class="stat-label">Menunggu Konfirmasi</div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="grid grid-2" style="margin-bottom:2rem;gap:1.5rem;">
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">📈 Booking per Hari</div>
+          </div>
+          <div class="chart-container"><canvas id="bookingChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">🏟️ Distribusi Jenis Lapangan</div>
+          </div>
+          <div class="chart-container"><canvas id="fieldTypeChart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Revenue Chart -->
+      <div class="chart-card" style="margin-bottom:2rem;">
+        <div class="chart-header">
+          <div class="chart-title">💰 Pendapatan per Bulan (Rp)</div>
+        </div>
+        <div class="chart-container" style="height:220px;"><canvas id="revenueChart"></canvas></div>
+      </div>
+
+      <!-- Bottom Row: Recent Bookings + Top Fields -->
+      <div class="grid grid-2" style="gap:1.5rem;">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📋 Booking Terbaru</span>
+            <a href="/admin/bookings.html" class="btn btn-ghost btn-sm">Lihat Semua →</a>
+          </div>
+          <div class="card-body" style="padding:0;" id="recentBookings">
+            <div class="page-loading" style="min-height:200px;"><div class="spinner"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🏆 Lapangan Terpopuler</span>
+          </div>
+          <div class="card-body" id="topFields">
+            <div class="page-loading" style="min-height:200px;"><div class="spinner"></div></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="../js/admin/dashboard.js"></script>
+</body>
+</html>

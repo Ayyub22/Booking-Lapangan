@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detail Booking — SportBook</title>
+  <link rel="stylesheet" href="./css/main.css" />
+  <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="Mid-client-jgQmLpH4NvYHVFK-"></script>
+</head>
+<body>
+  <header class="navbar" id="navbar"></header>
+
+  <div class="page-wrapper">
+    <main class="container" style="padding-top:2.5rem; padding-bottom:4rem; max-width:860px;">
+      <div style="margin-bottom:1.5rem;">
+        <a href="/my-bookings.html" style="display:inline-flex;align-items:center;gap:0.5rem;color:var(--clr-text-muted);font-size:0.875rem;transition:var(--transition);" onmouseover="this.style.color='var(--clr-text)'" onmouseout="this.style.color='var(--clr-text-muted)'">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          Kembali ke Booking Saya
+        </a>
+      </div>
+      <div id="detailContent">
+        <div class="page-loading" style="min-height:60vh;">
+          <div class="spinner"></div>
+          <span>Memuat detail booking...</span>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-brand">⚽ SportBook</div>
+        <p style="font-size:0.75rem;">© <span id="year"></span> SportBook. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Midtrans replaces manual upload modal -->
+
+  <script type="module" src="./js/booking-detail.js"></script>
+</body>
+</html>

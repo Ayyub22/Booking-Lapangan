@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Saya — SportBook</title>
+  <meta name="description" content="Lihat riwayat dan status booking lapangan olahraga kamu di SportBook." />
+  <link rel="stylesheet" href="./css/main.css" />
+</head>
+<body>
+  <header class="navbar" id="navbar"></header>
+
+  <div class="page-wrapper">
+    <main class="container" style="padding-top:2.5rem; padding-bottom:4rem;">
+
+      <div class="page-header">
+        <h1 class="page-header-title">📋 Booking Saya</h1>
+        <p class="page-header-subtitle">Lihat semua riwayat dan status booking lapangan kamu</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs" id="bookingTabs">
+        <button class="tab-btn active" data-status="all">Semua</button>
+        <button class="tab-btn" data-status="pending">⏳ Menunggu</button>
+        <button class="tab-btn" data-status="confirmed">✅ Dikonfirmasi</button>
+        <button class="tab-btn" data-status="completed">🏁 Selesai</button>
+        <button class="tab-btn" data-status="cancelled">❌ Dibatalkan</button>
+      </div>
+
+      <!-- Booking List -->
+      <div id="bookingList">
+        <div class="page-loading">
+          <div class="spinner"></div>
+          <span>Memuat data booking...</span>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-brand">⚽ SportBook</div>
+        <p style="font-size:0.75rem;">© <span id="year"></span> SportBook. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Cancel Confirmation Modal -->
+  <div class="modal-overlay" id="cancelModal" style="display:none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">❌ Batalkan Booking</h2>
+        <button class="modal-close" id="closeCancelModal">×</button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--clr-text-muted);">Apakah kamu yakin ingin membatalkan booking ini? Tindakan ini tidak dapat dibatalkan.</p>
+        <div id="cancelBookingInfo" style="margin-top:1.25rem;padding:1rem;background:var(--clr-surface-2);border-radius:10px;font-size:0.875rem;"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="keepBookingBtn">Tidak, Pertahankan</button>
+        <button class="btn btn-danger" id="confirmCancelBtn">Ya, Batalkan</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./js/my-bookings.js"></script>
+</body>
+</html>
