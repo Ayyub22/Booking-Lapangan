@@ -14,6 +14,7 @@ let selectedStartTime = null
 let selectedEndTime = null
 let selectedRating = 0
 let reviewBookingId = null
+let existingReview = null
 
 document.getElementById('year').textContent = new Date().getFullYear()
 
@@ -57,6 +58,7 @@ function renderFieldPage() {
   const avgRating = getAvgRating(field.reviews)
   const reviewCount = field.reviews?.length || 0
   const canBook = profile && profile.role === 'customer'
+  existingReview = profile ? field.reviews?.find(r => r.user_id === parseInt(profile.id) || r.user_id === profile.id) : null
 
   document.title = `${field.name} — SportBook`
 
@@ -132,7 +134,7 @@ function renderFieldPage() {
             <div>
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
                 <div class="section-title" style="margin-bottom:0;">⭐ Review Pengguna</div>
-                ${canBook ? `<button class="btn btn-outline btn-sm" id="openReviewBtn">Tulis Review</button>` : ''}
+                ${canBook ? `<button class="btn btn-outline btn-sm" id="openReviewBtn">${existingReview ? 'Edit Review' : 'Tulis Review'}</button>` : ''}
               </div>
               ${renderReviews()}
             </div>
@@ -382,11 +384,11 @@ async function submitBooking() {
 // ============================================================
 function openReviewModal() {
   if (!profile) { window.location.href = '/login.html'; return }
-  selectedRating = 0
-  document.getElementById('ratingValue').value = 0
-  document.getElementById('reviewComment').value = ''
+  selectedRating = existingReview ? existingReview.rating : 0
+  document.getElementById('ratingValue').value = selectedRating
+  document.getElementById('reviewComment').value = existingReview ? (existingReview.comment || '') : ''
   document.getElementById('reviewError').style.display = 'none'
-  updateStarDisplay(0)
+  updateStarDisplay(selectedRating)
   document.getElementById('reviewModal').style.display = 'flex'
 }
 
@@ -436,13 +438,23 @@ async function submitReview() {
   setLoading(btn, true, 'Kirim Review')
 
   try {
-    const { error } = await supabase.from('reviews').insert({
-      user_id: profile.id,
-      field_id: fieldId,
-      booking_id: reviewBookingId || null,
-      rating: selectedRating,
-      comment: comment || null
-    })
+    let error;
+    if (existingReview) {
+      const { error: updateError } = await supabase.from('reviews').update({
+        rating: selectedRating,
+        comment: comment || null
+      }).eq('id', existingReview.id);
+      error = updateError;
+    } else {
+      const { error: insertError } = await supabase.from('reviews').insert({
+        user_id: profile.id,
+        field_id: fieldId,
+        booking_id: reviewBookingId || null,
+        rating: selectedRating,
+        comment: comment || null
+      });
+      error = insertError;
+    }
 
     if (error) throw error
     showToast('Review berhasil dikirim! ⭐', 'success')
