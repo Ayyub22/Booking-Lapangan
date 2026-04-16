@@ -147,6 +147,7 @@ function openAddModal() {
   document.getElementById('fieldModalTitle').textContent = '➕ Tambah Lapangan'
   document.getElementById('fieldForm').reset()
   document.getElementById('fieldId').value = ''
+  document.getElementById('fieldLocation').value = ''
   document.getElementById('imagePreviewContainer').style.display = 'none'
   document.getElementById('currentImageContainer').style.display = 'none'
   document.getElementById('fieldIsActive').checked = true
@@ -165,6 +166,7 @@ async function openEditModal(id) {
   document.getElementById('fieldName').value = f.name
   document.getElementById('fieldType').value = f.type
   document.getElementById('fieldPrice').value = f.price_per_hour
+  document.getElementById('fieldLocation').value = f.location || ''
   document.getElementById('pricePreview').textContent = `≈ ${formatCurrency(f.price_per_hour)} / jam`
   document.getElementById('fieldOpenTime').value = f.open_time?.slice(0, 5) || '07:00'
   document.getElementById('fieldCloseTime').value = f.close_time?.slice(0, 5) || '22:00'
@@ -237,12 +239,13 @@ async function saveField() {
   const name = document.getElementById('fieldName').value.trim()
   const type = document.getElementById('fieldType').value
   const price = parseFloat(document.getElementById('fieldPrice').value)
+  const location = document.getElementById('fieldLocation').value.trim()
   const openTime = document.getElementById('fieldOpenTime').value
   const closeTime = document.getElementById('fieldCloseTime').value
   const description = document.getElementById('fieldDescription').value.trim()
   const isActive = document.getElementById('fieldIsActive').checked
 
-  if (!name || !type || !price || !openTime || !closeTime) {
+  if (!name || !type || !price || !openTime || !closeTime || !location) {
     errEl.textContent = 'Lengkapi semua field wajib.'
     errEl.style.display = 'block'
     return
@@ -266,7 +269,7 @@ async function saveField() {
       imageUrl = publicUrl
     }
 
-    const payload = { name, type, price_per_hour: price, open_time: openTime, close_time: closeTime, description: description || null, is_active: isActive }
+    const payload = { name, type, price_per_hour: price, open_time: openTime, close_time: closeTime, location, description: description || null, is_active: isActive }
     if (imageUrl) payload.image_url = imageUrl
 
     let error

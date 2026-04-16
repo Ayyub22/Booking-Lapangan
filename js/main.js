@@ -118,6 +118,7 @@ function createFieldCard(field) {
       </div>
       <div class="field-card-body">
         <div class="field-card-name">${field.name}</div>
+        ${field.location ? `<div style="font-size:0.75rem;color:var(--clr-text-muted);display:flex;align-items:center;gap:0.25rem;margin-bottom:0.25rem;line-height:1.4;">📍 ${truncate(field.location, 50)}</div>` : ''}
         <div class="field-card-type">${field.description ? truncate(field.description, 60) : `Lapangan ${cfg.label} profesional`}</div>
         <div class="field-card-meta">
           <div class="field-card-price">${formatCurrency(field.price_per_hour)} <span>/jam</span></div>

@@ -103,6 +103,17 @@ function renderFieldPage() {
               </div>
             </div>
 
+            <!-- Location -->
+            ${field.location ? `
+              <div style="display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1.5rem;background:var(--clr-surface-2);padding:1rem;border-radius:10px;">
+                <div style="font-size:1.25rem;">📍</div>
+                <div>
+                  <div style="font-weight:600;font-size:0.875rem;margin-bottom:0.25rem;">Lokasi Lapangan</div>
+                  <div style="color:var(--clr-text-muted);font-size:0.875rem;line-height:1.5;">${field.location}</div>
+                </div>
+              </div>
+            ` : ''}
+
             <!-- Description -->
             ${field.description ? `
               <div class="card" style="margin-bottom:1.5rem;">
