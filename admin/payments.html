@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Konfirmasi Pembayaran — SportBook Admin</title>
+  <title>Riwayat Pembayaran — SportBook Admin</title>
   <link rel="stylesheet" href="../css/main.css" />
 </head>
 <body>
@@ -11,16 +11,8 @@
     <aside class="sidebar" id="adminSidebar"></aside>
     <main class="admin-main">
       <div class="page-header">
-        <h1 class="page-header-title">💳 Konfirmasi Pembayaran</h1>
-        <p class="page-header-subtitle">Verifikasi bukti pembayaran dari pelanggan</p>
-      </div>
-
-      <!-- Tabs -->
-      <div class="tabs" style="margin-bottom:1.5rem;">
-        <button class="tab-btn active" data-status="pending" id="tab-pending">⏳ Menunggu Verifikasi</button>
-        <button class="tab-btn" data-status="verified" id="tab-verified">✅ Terverifikasi</button>
-        <button class="tab-btn" data-status="rejected" id="tab-rejected">❌ Ditolak</button>
-        <button class="tab-btn" data-status="all" id="tab-all">Semua</button>
+        <h1 class="page-header-title">💳 Riwayat Pembayaran</h1>
+        <p class="page-header-subtitle">Daftar transaksi yang berhasil diproses secara otomatis via Midtrans</p>
       </div>
 
       <!-- Payments Grid -->
@@ -28,62 +20,6 @@
         <div class="page-loading" style="min-height:300px;"><div class="spinner"></div><span>Memuat data pembayaran...</span></div>
       </div>
     </main>
-  </div>
-
-  <!-- Payment Detail Modal -->
-  <div class="modal-overlay" id="paymentDetailModal" style="display:none;">
-    <div class="modal modal-lg">
-      <div class="modal-header">
-        <h2 class="modal-title">💳 Detail Pembayaran</h2>
-        <button class="modal-close" id="closePaymentDetailModal">×</button>
-      </div>
-      <div class="modal-body">
-        <div class="grid grid-2" style="gap:1.5rem;">
-          <!-- Left: Proof image -->
-          <div>
-            <div style="font-weight:600;margin-bottom:0.75rem;font-size:0.875rem;color:var(--clr-text-muted);text-transform:uppercase;letter-spacing:0.5px;">Bukti Pembayaran</div>
-            <div id="proofImageContainer" style="background:var(--clr-surface-2);border:1px solid var(--clr-border);border-radius:12px;overflow:hidden;min-height:280px;display:flex;align-items:center;justify-content:center;">
-              <div class="spinner"></div>
-            </div>
-            <a id="proofDownloadLink" href="#" target="_blank" class="btn btn-ghost btn-sm" style="margin-top:0.75rem;width:100%;">
-              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-              Buka di Tab Baru
-            </a>
-          </div>
-          <!-- Right: Payment info -->
-          <div>
-            <div style="font-weight:600;margin-bottom:0.75rem;font-size:0.875rem;color:var(--clr-text-muted);text-transform:uppercase;letter-spacing:0.5px;">Info Booking</div>
-            <div id="paymentDetailInfo" style="background:var(--clr-surface-2);border:1px solid var(--clr-border);border-radius:12px;padding:1.25rem;"></div>
-
-            <div style="margin-top:1.25rem;" id="actionSection">
-              <div style="font-weight:600;margin-bottom:0.75rem;font-size:0.875rem;color:var(--clr-text-muted);text-transform:uppercase;letter-spacing:0.5px;">Tindakan</div>
-              <div style="display:flex;gap:0.75rem;flex-direction:column;">
-                <button class="btn btn-primary" id="verifyPaymentBtn">
-                  <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                  Verifikasi Pembayaran
-                </button>
-                <button class="btn btn-danger" id="rejectPaymentBtn">
-                  <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-                  Tolak Pembayaran
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Rejection reason section -->
-        <div id="rejectionSection" style="display:none;margin-top:1.25rem;">
-          <div class="form-group" style="margin-bottom:0;">
-            <label class="form-label">Alasan Penolakan <span class="required">*</span></label>
-            <textarea id="rejectionReason" class="form-control" rows="2" placeholder="Jelaskan alasan penolakan pembayaran..."></textarea>
-          </div>
-          <div style="display:flex;gap:0.75rem;margin-top:0.75rem;">
-            <button class="btn btn-secondary btn-sm" id="cancelRejectBtn">Batal</button>
-            <button class="btn btn-danger btn-sm" id="confirmRejectBtn">Konfirmasi Tolak</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <script type="module" src="../js/admin/payments.js"></script>
