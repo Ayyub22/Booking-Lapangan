@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SportBook — Booking Lapangan Olahraga</title>
-  <meta name="description" content="Platform booking lapangan olahraga terbaik. Futsal, basket, badminton, tenis, dan voli tersedia. Booking mudah, cepat, dan terpercaya." />
+  <meta name="description"
+    content="Platform booking lapangan olahraga terbaik. Futsal, basket, badminton, tenis, dan voli tersedia. Booking mudah, cepat, dan terpercaya." />
   <link rel="stylesheet" href="./css/main.css" />
 </head>
+
 <body>
 
   <!-- Navbar -->
@@ -30,19 +33,32 @@
           Sekarang!
         </h1>
         <p class="hero-subtitle">
-          Temukan dan pesan lapangan futsal, basket, badminton, tenis, dan voli dengan mudah. Berbagai pilihan lapangan berkualitas di satu platform.
+          Temukan dan pesan lapangan futsal, basket, badminton, tenis, dan voli dengan mudah. Berbagai pilihan lapangan
+          berkualitas di satu platform.
         </p>
         <div class="hero-actions">
           <a href="#fields" class="btn btn-primary btn-lg">
-            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z" />
+            </svg>
             Lihat Semua Lapangan
           </a>
           <a href="/register.html" class="btn btn-outline btn-lg" id="ctaRegister">Daftar Gratis</a>
         </div>
         <div class="hero-stats">
-          <div><div class="hero-stat-value" id="statFields">-</div><div class="hero-stat-label">Lapangan Tersedia</div></div>
-          <div><div class="hero-stat-value" id="statBookings">-</div><div class="hero-stat-label">Total Booking</div></div>
-          <div><div class="hero-stat-value">5⭐</div><div class="hero-stat-label">Rating Pengguna</div></div>
+          <div>
+            <div class="hero-stat-value" id="statFields">-</div>
+            <div class="hero-stat-label">Lapangan Tersedia</div>
+          </div>
+          <div>
+            <div class="hero-stat-value" id="statBookings">-</div>
+            <div class="hero-stat-label">Total Booking</div>
+          </div>
+          <div>
+            <div class="hero-stat-value">5⭐</div>
+            <div class="hero-stat-label">Rating Pengguna</div>
+          </div>
         </div>
       </div>
     </section>
@@ -52,17 +68,20 @@
       <!-- Filter Bar -->
       <div class="filter-bar animate-fade-in">
         <div class="search-input-wrapper">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+          </svg>
           <input type="text" class="search-input form-control" id="searchInput" placeholder="Cari lapangan..." />
         </div>
         <div class="filter-chips">
           <button class="chip active" data-type="all">Semua</button>
-          <button class="chip" data-type="futsal">⚽ Futsal</button>
-          <button class="chip" data-type="basket">🏀 Basket</button>
-          <button class="chip" data-type="badminton">🏸 Badminton</button>
-          <button class="chip" data-type="tenis">🎾 Tenis</button>
-          <button class="chip" data-type="voli">🏐 Voli</button>
-          <button class="chip" data-type="renang">🏊 Renang</button>
+          <button class="chip" data-type="futsal">Futsal</button>
+          <button class="chip" data-type="basket">Basket</button>
+          <button class="chip" data-type="badminton">Badminton</button>
+          <button class="chip" data-type="tenis">Tenis</button>
+          <button class="chip" data-type="voli">Voli</button>
+          <button class="chip" data-type="renang">Renang</button>
         </div>
         <div style="display:flex; gap:0.5rem; align-items:center; margin-left:auto;">
           <select class="form-control" id="sortSelect" style="width:auto;font-size:0.8rem;padding:0.5rem 0.75rem;">
@@ -74,7 +93,9 @@
       </div>
       <div style="margin-bottom:1.5rem;color:var(--clr-text-muted);font-size:0.875rem;" id="resultsCount"></div>
       <div id="fieldsGrid" class="grid grid-auto">
-        <div class="page-loading"><div class="spinner"></div><span>Memuat lapangan...</span></div>
+        <div class="page-loading">
+          <div class="spinner"></div><span>Memuat lapangan...</span>
+        </div>
       </div>
     </main>
 
@@ -89,4 +110,5 @@
 
   <script type="module" src="./js/main.js"></script>
 </body>
+
 </html>
