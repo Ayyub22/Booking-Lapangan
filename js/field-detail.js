@@ -105,13 +105,13 @@ function renderFieldPage() {
 
             <!-- Location -->
             ${field.location ? `
-              <div style="display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1.5rem;background:var(--clr-surface-2);padding:1rem;border-radius:10px;">
+              <a href="https://maps.google.com/?q=${encodeURIComponent(field.location)}" target="_blank" style="display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1.5rem;background:var(--clr-surface-2);padding:1rem;border-radius:10px;text-decoration:none;transition:var(--transition);border:1px solid transparent;" onmouseover="this.style.borderColor='var(--clr-primary)';this.style.backgroundColor='var(--clr-primary-glow)'" onmouseout="this.style.borderColor='transparent';this.style.backgroundColor='var(--clr-surface-2)'">
                 <div style="font-size:1.25rem;">📍</div>
                 <div>
-                  <div style="font-weight:600;font-size:0.875rem;margin-bottom:0.25rem;">Lokasi Lapangan</div>
-                  <div style="color:var(--clr-text-muted);font-size:0.875rem;line-height:1.5;">${field.location}</div>
+                  <div style="font-weight:600;font-size:0.875rem;margin-bottom:0.25rem;color:var(--clr-text);">Lokasi Lapangan</div>
+                  <div style="color:var(--clr-text-muted);font-size:0.875rem;line-height:1.5;">${field.location} <span style="color:var(--clr-primary);font-size:0.75rem;margin-left:0.5rem;font-weight:600;">Lihat di Maps ↗</span></div>
                 </div>
-              </div>
+              </a>
             ` : ''}
 
             <!-- Description -->

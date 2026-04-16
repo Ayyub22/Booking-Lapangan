@@ -92,7 +92,9 @@ function renderFields() {
 
   // Add click listeners
   grid.querySelectorAll('.field-card').forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+      // Prevent redirect if clicking on the maps link inside the card
+      if(e.target.closest('a')) return;
       window.location.href = `/field-detail.html?id=${card.dataset.id}`
     })
   })
@@ -118,7 +120,7 @@ function createFieldCard(field) {
       </div>
       <div class="field-card-body">
         <div class="field-card-name">${field.name}</div>
-        ${field.location ? `<div style="font-size:0.75rem;color:var(--clr-text-muted);display:flex;align-items:center;gap:0.25rem;margin-bottom:0.25rem;line-height:1.4;">📍 ${truncate(field.location, 50)}</div>` : ''}
+        ${field.location ? `<a href="https://maps.google.com/?q=${encodeURIComponent(field.location)}" target="_blank" style="font-size:0.75rem;color:var(--clr-text-muted);display:flex;align-items:center;gap:0.25rem;margin-bottom:0.25rem;line-height:1.4;text-decoration:none;" onmouseover="this.style.color='var(--clr-primary)'" onmouseout="this.style.color='var(--clr-text-muted)'">📍 ${truncate(field.location, 50)}</a>` : ''}
         <div class="field-card-type">${field.description ? truncate(field.description, 60) : `Lapangan ${cfg.label} profesional`}</div>
         <div class="field-card-meta">
           <div class="field-card-price">${formatCurrency(field.price_per_hour)} <span>/jam</span></div>
