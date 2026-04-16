@@ -92,11 +92,11 @@ function renderFieldPage() {
                 <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
                   <div style="display:flex;align-items:center;gap:0.5rem;color:var(--clr-accent);">
                     ${avgRating > 0
-                      ? `<span style="font-size:1.1rem;">${'★'.repeat(Math.round(avgRating))}${'☆'.repeat(5-Math.round(avgRating))}</span>
+      ? `<span style="font-size:1.1rem;">${'★'.repeat(Math.round(avgRating))}${'☆'.repeat(5 - Math.round(avgRating))}</span>
                          <span style="font-weight:700;">${avgRating.toFixed(1)}</span>
                          <span style="color:var(--clr-text-muted);font-size:0.875rem;">(${reviewCount} review)</span>`
-                      : '<span style="color:var(--clr-text-muted);font-size:0.875rem;">Belum ada review</span>'
-                    }
+      : '<span style="color:var(--clr-text-muted);font-size:0.875rem;">Belum ada review</span>'
+    }
                   </div>
                   <div style="color:var(--clr-text-muted);font-size:0.875rem;">🕐 ${formatTime(field.open_time)} – ${formatTime(field.close_time)}</div>
                 </div>
@@ -118,7 +118,7 @@ function renderFieldPage() {
             ${field.description ? `
               <div class="card" style="margin-bottom:1.5rem;">
                 <div class="card-body">
-                  <div class="section-title" style="margin-bottom:0.75rem;">📋 Tentang Lapangan</div>
+                  <div class="section-title" style="margin-bottom:0.75rem;">Tentang Lapangan</div>
                   <p style="color:var(--clr-text-muted);line-height:1.7;">${field.description}</p>
                 </div>
               </div>` : ''}
@@ -159,15 +159,15 @@ function renderFieldPage() {
                 <div style="font-size:0.8rem;color:var(--clr-text-muted);margin-bottom:1.5rem;">Harga belum termasuk pajak</div>
 
                 ${canBook
-                  ? `<button class="btn btn-primary btn-full btn-lg" id="openBookingBtn">
+      ? `<button class="btn btn-primary btn-full btn-lg" id="openBookingBtn">
                       <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
                       Pesan Sekarang
                     </button>`
-                  : profile
-                    ? `<div style="text-align:center;padding:1rem;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:10px;color:var(--clr-warning);font-size:0.875rem;">Admin tidak dapat melakukan booking</div>`
-                    : `<a href="/login.html" class="btn btn-primary btn-full btn-lg">Masuk untuk Booking</a>
+      : profile
+        ? `<div style="text-align:center;padding:1rem;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:10px;color:var(--clr-warning);font-size:0.875rem;">Admin tidak dapat melakukan booking</div>`
+        : `<a href="/login.html" class="btn btn-primary btn-full btn-lg">Masuk untuk Booking</a>
                        <a href="/register.html" class="btn btn-ghost btn-full" style="margin-top:0.5rem;">Daftar Gratis →</a>`
-                }
+    }
 
                 <div class="divider"></div>
                 <div style="display:flex;flex-direction:column;gap:0.75rem;font-size:0.875rem;">
@@ -303,7 +303,7 @@ async function loadSlotsForDate(date) {
   slotGrid.innerHTML = slots.map(slot => {
     const isBooked = (existingBookings || []).some(b => {
       // Check overlap
-      const [bs, be] = [b.start_time.slice(0,5), b.end_time.slice(0,5)]
+      const [bs, be] = [b.start_time.slice(0, 5), b.end_time.slice(0, 5)]
       return !(slot.end <= bs || slot.start >= be)
     })
     return `
